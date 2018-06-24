@@ -1,21 +1,13 @@
 DOMAINS_LIST		:= ./build/freemail_domains.txt
-DOMAINS_LIST_PLUS	:= ./src/not-found-in-spamassassin-list.txt
+DOMAINS_LIST_PLUS	:= ./assets/not-found-in-spamassassin-list.txt
 DOMAINS_START		:= free email providers start
 DOMAINS_END			:= free email providers end
-
-COMMON_JS_SRC		:= ./src/commonjs/index.js
-PHP_SRC			:= ./src/php/IsBizMail.php
-DOTNET_SRC		:= ./src/dotnet/IsBizMail.cs
-JS_SRC 			:= ./src/javascript/is-biz-mail.js
-JS_TEMP_SRC		:= ./build/freemail_domains.js
-JS_CLOSURE 		:= (function(global){
-JS_CLOSURE_END 	:= })((
-
-GIT_TAG			:= $(shell git describe --tags `git rev-list --tags --max-count=1`)
+DOTNET_SRC			:= ./src/IsBizMail.cs
+GIT_TAG				:= $(shell git describe --tags `git rev-list --tags --max-count=1`)
 
 .PHONY: all
 
-all: php javascript dotnet
+all: dotnet
 
 clean:
 	@find ./build -mindepth 1 -delete
@@ -33,34 +25,13 @@ download: prepare
 	@sed -e 's/ /", "/g' -i $(DOMAINS_LIST)
 	@echo "\"$$(cat $(DOMAINS_LIST))\"," > $(DOMAINS_LIST)
 
-php: download
-	@sed '/$(DOMAINS_START)/,/$(DOMAINS_END)/{//!d}' -i $(PHP_SRC)
-	@sed '/$(DOMAINS_START)/ r $(DOMAINS_LIST)' -i $(PHP_SRC)
-	@sed 's/^"/                "/' -i $(PHP_SRC)
-
-commonjs: download
-	@sed '/$(DOMAINS_START)/,/$(DOMAINS_END)/{//!d}' -i $(COMMON_JS_SRC)
-	@sed -e ':a' -e 'N' -e '$$!ba' -e 's/\n//g' $(DOMAINS_LIST) > $(JS_TEMP_SRC)
-	@echo "    $$(cat $(JS_TEMP_SRC))" > $(JS_TEMP_SRC)
-	@sed '/$(DOMAINS_START)/ r $(JS_TEMP_SRC)' -i $(COMMON_JS_SRC)
-
-javascript: commonjs
-	@sed '/$(JS_CLOSURE)/,/$(JS_CLOSURE_END)/{//!d}' -i $(JS_SRC)
-	@sed 's/^/    /' $(COMMON_JS_SRC) > $(JS_TEMP_SRC)
-	@sed 's/^    $$//' -i $(JS_TEMP_SRC)
-	@sed '/$(JS_CLOSURE)/r $(JS_TEMP_SRC)' -i $(JS_SRC)
-	@sed 's/module.exports/global.isBizMail/g' -i $(JS_SRC)
-
 dotnet: download
 	@sed '/$(DOMAINS_START)/,/$(DOMAINS_END)/{//!d}' -i $(DOTNET_SRC)
 	@sed '/$(DOMAINS_START)/ r $(DOMAINS_LIST)' -i $(DOTNET_SRC)
 	@sed 's/^"/                "/g' -i $(DOTNET_SRC)
 
 tests:
-	@dotnet test ./test/dotnet
-	@npm test
-	@composer test
+	@dotnet test ./tests
 
 bump_version:
-	@sed 's/version\": .*$$/version": "$(GIT_TAG)",/g' -i ./package.json
 	@sed 's/Version>.*</Version>$(GIT_TAG)</g' -i ./src/dotnet/IsBizMail.csproj

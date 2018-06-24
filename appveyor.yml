@@ -23,7 +23,7 @@ environment:
   VERSION_INFORMATIONAL: '{version}'
   VERSION_UNSTABLE_SUFFIX: 'preview'
   COVERALLS_REPO_TOKEN:
-    secure: MbmYgAiQlG1ogA38WeuL+z2m8q+lqY8FNSUjhRIetIBcxwYmOfut+jDlPfn6aHlt
+    secure: odGiKZUnpY4yFHVXwHGp3Tk1dXKQRPS1JVSftdfIK/rMc17ttK6q2T2jwfZme5pB
   APPVEYOR_TOKEN:
     secure: LtoVAPATN9iTCl1zkCvEktqP92QSEEngyS3vqG3GphE=
 
@@ -73,7 +73,7 @@ build_script:
 
 # NuGet files qualified as artifacts
 artifacts:
-  - path: 'build\**\*.nupkg' # find the NuGet files
+  - path: 'bin\**\*.nupkg' # find the NuGet files
     name: NuGet_Files
 
 # Deploy to GitHub releases
@@ -132,7 +132,7 @@ skip_non_tags: false
 
 # Tests shall stay off for now
 test_script:
-    - cmd: dotnet test .\test\dotnet
+    - cmd: dotnet test .\tests
 
 # Test coverage: OpenCover + Coveralls
 after_test:
@@ -142,5 +142,5 @@ after_test:
       dotnet tool install coveralls.net --tool-path tools
       
       # Set variables
-      .\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -target:dotnet.exe -targetargs:"test .\test\dotnet" -register:user -filter:"+[*]* -[xunit*]* -[*Tests]*" -excludedirs:".\src\obj" -output:"test\dotnet\coverage.xml" -oldStyle
-      .\tools\csmacnz.Coveralls.exe --opencover --input .\test\dotnet\coverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_JOB_ID
+      .\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -target:dotnet.exe -targetargs:"test .\tests" -register:user -filter:"+[*]* -[xunit*]* -[*Tests]*" -excludedirs:".\src\obj" -output:".\tests\coverage.xml" -oldStyle
+      .\tools\csmacnz.Coveralls.exe --opencover --input .\tests\coverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_JOB_ID

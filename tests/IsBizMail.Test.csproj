@@ -24,10 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\dotnet\IsBizMail.csproj" />
+    <ProjectReference Include="..\src\IsBizMail.csproj" />
   </ItemGroup>
 
   <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
-    <Copy SourceFiles="..\emailSamples.json" DestinationFolder="$(OutDir)" />
+    <Copy SourceFiles="..\assets\emailSamples.json" DestinationFolder="$(OutDir)" />
   </Target>
 </Project>
