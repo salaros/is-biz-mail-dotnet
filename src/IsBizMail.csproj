@@ -29,4 +29,8 @@
     <OutputPath>..\bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugType>Full</DebugType>
+  </PropertyGroup>
+
 </Project>
