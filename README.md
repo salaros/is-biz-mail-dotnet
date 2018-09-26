@@ -8,11 +8,20 @@ Business Email Checker
 [![NuGet](https://img.shields.io/nuget/dt/Salaros.Email.IsBizMail.svg)](https://www.nuget.org/packages/Salaros.Email.IsBizMail)
 [![.NET Standard](https://img.shields.io/badge/.NET%20Standard-2.0+-784877.svg)](https://docs.microsoft.com/en-us/dotnet/standard/net-standard#net-implementation-support)
 
+[![Donate Patreon](https://img.shields.io/badge/donate-Patreon-f96854.svg)](https://www.patreon.com/salaros/)
+[![Donate Paypal](https://img.shields.io/badge/donate-PayPal-009cde.svg)](https://paypal.me/salarosIT)
+[![Donate Liberapay](https://img.shields.io/badge/donate-Liberapay-ffc600.svg)](https://liberapay.com/salaros/)
+
 **isBizMail** tells you whether a given email address is free (gmail.com, yahoo.es, yandex.ru etc) or not.
 The list of emails used by **isBizMail** is taken from [here](http://svn.apache.org/repos/asf/spamassassin/trunk/rules/20_freemail_domains.cf)¹.
 Detects around 2500 domains and subdomains.
 
 1) *All credits for the list itself go to [SpamAssasin](https://spamassassin.apache.org/) authors and contributors*
+
+## Looking for JavaScript, PHP etc?
+
+* [JavaScript implementation](https://github.com/salaros/is-biz-mail-js) (Vanilla / CommomJS module)
+* [PHP implementation](https://github.com/salaros/is-biz-mail-php) (PHP 5.4.0+)
 
 ### Installation
 
