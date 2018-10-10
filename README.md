@@ -23,6 +23,12 @@ Detects around 2500 domains and subdomains.
 * [JavaScript implementation](https://github.com/salaros/is-biz-mail-js) (Vanilla / CommomJS module)
 * [PHP implementation](https://github.com/salaros/is-biz-mail-php) (PHP 5.4.0+)
 
+## 🟊🟊🟊 Support this project 🟊🟊🟊
+
+You can support us in a small way, please consider starring and sharing this repo! It helps us getting known and grow the community.
+
+![star us](.github/assets/star_us.gif)
+
 ### Installation
 
 You can install IsBizMail for **.NET Core 2.0+ / Framework 4.6.1+, Mono 5.4+** etc via [NuGet](https://www.nuget.org/packages/Salaros.Email.IsBizMail/).
