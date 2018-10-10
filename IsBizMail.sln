@@ -18,6 +18,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsBizMail", "src\IsBizMail.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsBizMail.Test", "tests\IsBizMail.Test.csproj", "{8A4D33FB-4592-4EC2-894F-B773BEAE305C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{B848CBFD-3FF8-444D-B64E-972917F0852F}"
+	ProjectSection(SolutionItems) = preProject
+		assets\emailSamples.json = assets\emailSamples.json
+		assets\not-found-in-spamassassin-list.txt = assets\not-found-in-spamassassin-list.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +41,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B848CBFD-3FF8-444D-B64E-972917F0852F} = {78307CEF-D002-4C0D-A5A5-19FD6321ADD1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3478BDBD-DA54-4805-A3E2-EE840F8FFA11}

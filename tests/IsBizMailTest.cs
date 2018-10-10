@@ -1,37 +1,70 @@
 using System.IO;
 using Xunit;
 using System.Reflection;
+using System;
 
 namespace Salaros.Email.Test
 {
     public class IsBizMailTest
     {
         [Fact]
-        public void IsValid()
+        public void DoValidPassValidation()
         {
             foreach (var businessEmail in EmailSamples.BusinessEmails)
             {
-                var isValid = IsBizMail.IsValid(businessEmail);
-                Assert.True(isValid, $"{businessEmail} is not free (business)");
+                Assert.True(IsBizMail.IsValid(businessEmail), $"{businessEmail} is not free (business)");
             }
 
         }
 
         [Fact]
-        public void IsFree()
+        public void AreFreeConsideredFree()
         {
             foreach (var freeEmail in EmailSamples.FreeEmails)
             {
-                var isFree = IsBizMail.IsFreeMailAddress(freeEmail);
-                Assert.True(isFree, $"{freeEmail} is free");
+                Assert.True(IsBizMail.IsFreeMailAddress(freeEmail), $"{freeEmail} is free");
             }
-
         }
 
         [Fact]
-        public void HasDomainDefinitions()
+        public void DoPatternsWork()
+        {
+            foreach (var patternEmail in EmailSamples.DomainPatterns)
+            {
+                Assert.True(IsBizMail.IsFreeMailAddress(patternEmail), $"{patternEmail} is free");
+            }
+        }
+
+        [Fact]
+        public void DoInvalidFail()
+        {
+            foreach (var invalidEmail in EmailSamples.InvalidEmails)
+            {
+                Assert.False(IsBizMail.IsValid(invalidEmail), $"{invalidEmail} is invalid");
+            }
+        }
+
+        [Fact]
+        public void AreExceptionsThrown()
+        {
+            foreach (var invalidEmail in EmailSamples.Throws)
+            {
+                Assert.Throws<ArgumentException>(() => {
+                    IsBizMail.IsFreeMailAddress(invalidEmail as string);
+                });
+            }
+        }
+
+        [Fact]
+        public void HasFreeDomainsListPopulated()
         {
             Assert.NotEmpty(IsBizMail.GetFreeDomains());
+        }
+
+        [Fact]
+        public void HasFreeDomainsPatternsPopulated()
+        {
+            Assert.NotEmpty(IsBizMail.GetFreeDomainPatterns());
         }
 
         private static readonly EmailSamples EmailSamples;
