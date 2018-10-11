@@ -31,6 +31,6 @@
   </ItemGroup>
 
   <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
-    <Copy SourceFiles="..\assets\emailSamples.json" DestinationFolder="$(OutDir)" />
+    <Copy SourceFiles="..\assets\email-test-samples.json" DestinationFolder="$(OutDir)" />
   </Target>
 </Project>

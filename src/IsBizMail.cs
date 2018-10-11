@@ -45,7 +45,7 @@ namespace Salaros.Email
             var emailDomain = email
                 ?.ToLowerInvariant()
                 ?.Split(new[]{ '@' }, 2, StringSplitOptions.RemoveEmptyEntries)
-                ?.LastOrDefault();
+                ?.ElementAtOrDefault(1);
 
             if (string.IsNullOrWhiteSpace(emailDomain))
                 throw new ArgumentException($"Please supply a valid email address: {nameof(email)}", nameof(email));

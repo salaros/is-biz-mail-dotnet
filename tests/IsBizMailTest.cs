@@ -2,6 +2,7 @@ using System.IO;
 using Xunit;
 using System.Reflection;
 using System;
+using System.Linq;
 
 namespace Salaros.Email.Test
 {
@@ -10,7 +11,10 @@ namespace Salaros.Email.Test
         [Fact]
         public void DoValidPassValidation()
         {
-            foreach (var businessEmail in EmailSamples.BusinessEmails)
+            Assert.NotNull(EmailSamples.Business);
+            Assert.NotEmpty(EmailSamples.Business);
+
+            foreach (var businessEmail in EmailSamples.Business)
             {
                 Assert.True(IsBizMail.IsValid(businessEmail), $"{businessEmail} is not free (business)");
             }
@@ -20,7 +24,10 @@ namespace Salaros.Email.Test
         [Fact]
         public void AreFreeConsideredFree()
         {
-            foreach (var freeEmail in EmailSamples.FreeEmails)
+            Assert.NotNull(EmailSamples.Free);
+            Assert.NotEmpty(EmailSamples.Free);
+
+            foreach (var freeEmail in EmailSamples.Free)
             {
                 Assert.True(IsBizMail.IsFreeMailAddress(freeEmail), $"{freeEmail} is free");
             }
@@ -29,6 +36,9 @@ namespace Salaros.Email.Test
         [Fact]
         public void DoPatternsWork()
         {
+            Assert.NotNull(EmailSamples.DomainPatterns);
+            Assert.NotEmpty(EmailSamples.DomainPatterns);
+
             foreach (var patternEmail in EmailSamples.DomainPatterns)
             {
                 Assert.True(IsBizMail.IsFreeMailAddress(patternEmail), $"{patternEmail} is free");
@@ -38,7 +48,10 @@ namespace Salaros.Email.Test
         [Fact]
         public void DoInvalidFail()
         {
-            foreach (var invalidEmail in EmailSamples.InvalidEmails)
+            Assert.NotNull(EmailSamples.Invalid);
+            Assert.NotEmpty(EmailSamples.Invalid);
+
+            foreach (var invalidEmail in EmailSamples.Invalid.Concat(EmailSamples.Incomplete))
             {
                 Assert.False(IsBizMail.IsValid(invalidEmail), $"{invalidEmail} is invalid");
             }
@@ -47,10 +60,13 @@ namespace Salaros.Email.Test
         [Fact]
         public void AreExceptionsThrown()
         {
-            foreach (var invalidEmail in EmailSamples.Throws)
+            Assert.NotNull(EmailSamples.Throws);
+            Assert.NotEmpty(EmailSamples.Throws);
+
+            foreach (var errorTrigger in EmailSamples.Throws.Select(t => t as string).Concat(EmailSamples.Incomplete))
             {
                 Assert.Throws<ArgumentException>(() => {
-                    IsBizMail.IsFreeMailAddress(invalidEmail as string);
+                    IsBizMail.IsFreeMailAddress(errorTrigger);
                 });
             }
         }
@@ -72,7 +88,7 @@ namespace Salaros.Email.Test
         static IsBizMailTest()
         {
             var sampleEmailsPath = Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName;
-            sampleEmailsPath = Path.Combine(sampleEmailsPath, "emailSamples.json");
+            sampleEmailsPath = Path.Combine(sampleEmailsPath, "email-test-samples.json");
             var sampleEmailsRaw = File.ReadAllText(sampleEmailsPath);
             EmailSamples = Newtonsoft.Json.JsonConvert.DeserializeObject<EmailSamples>(sampleEmailsRaw);
         }

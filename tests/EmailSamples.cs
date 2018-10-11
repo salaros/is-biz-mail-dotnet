@@ -12,7 +12,7 @@ namespace Salaros.Email.Test
         /// The list of business emails.
         /// </value>
         [JsonProperty("business")]
-        public List<string> BusinessEmails { get; internal set; }
+        public List<string> Business { get; internal set; }
 
         /// <summary>
         /// Gets or sets the list free emails.
@@ -21,7 +21,7 @@ namespace Salaros.Email.Test
         /// The list free emails.
         /// </value>
         [JsonProperty("free")]
-        public List<string> FreeEmails { get; internal set; }
+        public List<string> Free { get; internal set; }
 
         /// <summary>
         /// Gets or sets the list of domain patterns.
@@ -39,7 +39,7 @@ namespace Salaros.Email.Test
         /// The invalid emails.
         /// </value>
         [JsonProperty("invalid")]
-        public List<string> InvalidEmails { get; internal set; }
+        public List<string> Invalid { get; internal set; }
 
         /// <summary>
         /// Gets or sets the list of values triggering errors.
@@ -49,5 +49,14 @@ namespace Salaros.Email.Test
         /// </value>
         [JsonProperty("throws")]
         public List<object> Throws { get; internal set; }
+
+        /// <summary>
+        /// Gets or sets the list of incomplete emails.
+        /// </summary>
+        /// <value>
+        /// The list of incomplete emails.
+        /// </value>
+        [JsonProperty("incomplete")]
+        public List<string> Incomplete { get; internal set; }
     }
 }

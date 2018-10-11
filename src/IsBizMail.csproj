@@ -22,7 +22,7 @@
     <PackageProjectUrl>https://github.com/salaros/is-biz-mail</PackageProjectUrl>
     <RepositoryUrl>https://github.com/salaros/is-biz-mail</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <PackageIconUrl>https://raw.githubusercontent.com/salaros/is-biz-mail/master/assets/icon.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/salaros/is-biz-mail/master/.nuget/icon.png</PackageIconUrl>
   </PropertyGroup>
 
   <PropertyGroup>

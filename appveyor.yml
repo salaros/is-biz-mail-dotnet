@@ -13,11 +13,6 @@ branches:
 # Build Configuration, i.e. Debug, Release, etc.
 configuration: Debug
 
-# Scripts that run after cloning repository
-install:
-  - cmd: dotnet --info
-  - cmd: dotnet restore
-
 environment:
   VERSION_SIMPLE: '{version}'
   VERSION_INFORMATIONAL: '{version}'
@@ -26,6 +21,18 @@ environment:
     secure: odGiKZUnpY4yFHVXwHGp3Tk1dXKQRPS1JVSftdfIK/rMc17ttK6q2T2jwfZme5pB
   APPVEYOR_TOKEN:
     secure: LtoVAPATN9iTCl1zkCvEktqP92QSEEngyS3vqG3GphE=
+  GIT_SSH_KEY:
+    secure: kRPByNqMqQdDnoi5AiOM/jpJ5p4NL7p1TXklkUVGatP0e7+p1sV2QF40OYUOML/RAutb2nCSyT0TEbq6agZ5EXCVJ61rPaxTA2SfZzEhRCVOlx58MMPmylghBHFzeTYXzaImi8/9P44QmXRKmgYPn7KOmEcuB1idEXXT0ASTUVrTAzbBrsa36yMus2MqWiCe3ouXw0J8vf6PHTXDcFUEYHelSUerHaUqHEjceJSDDNk9cEbA9sbVAhAq4mALzNzaF7tew8PrBYbTHRIAyHlX8jBVbe/E/VmgijkdqTelJttFWbZ/w1HN7O5pHOCD85hwnh+G/W8pcAOW+xHgeMEmS0LXOYIno102KXWx6v16GPBU2HX8jJqNBOk1I2WZG//aIxEctN0xsnUjDPMq7icgxjVl6x+ix5MR4qNTu/Oa3qRLbIL/5rTDeECAY2yzfsylBCszEuC7+wjCv7WHCwaMxmQs0lZeuySm4NPIvmCoeAgqtdEt2b7jVB7aXpKC08oXLlWkDPbwkfJJZoIXE34bIgmQhLMTci7Yog9oiT4MjycdNoOsKeNQ1FIf50wlyPrV02UEiwic8Y9xghgY+W5zyvO1Az0EtnTSRKnOllF7Axs70zDaI9/AjOL+N+zzQS2pEf4HQKmVElIov8tbFEz56p5bxKEYLxq/VKUbTfq3jtLkn63PMsGLg9ds6S54xBuZ1MCmXBA8V6mkVOLmESvzjZz8G7Lc/SFF66lSjOIxTxQIsArKKbvE86WA76yZHdC+n5zSgy2cPiYKipqS2I+ZGBwGid0awMRQ503PyWt2FABEhXwzfoFeUMxGJeBZwdSFcRDV20uEv5x1eO69LiIHajG8lodzfM8GH4oSbVTSbPl8yB+qagnttXvJ7PKK15AbIqNTqDMi2M1n6vzUhc+u9yaKM6PAQH+gD4dJH8zEOY5zCzZ5euawZt4cgr96wUd6jFlheQihVkQohYS0QhEddOcyw0/hsH7IxFR2MI8/R2h7xbXuGfzXbVbFzTMIis2W5wQ8DBlC+ycTwtv7YhZHUzg2hFCFb8lMVe2WYaJcS8R6954P/6Un4ui5PJPGa44Upk91OSolfoZFZNI78Se8eQ==
+
+# Scripts that run after cloning repository
+install:
+  - ps: $fileContent = "-----BEGIN RSA PRIVATE KEY-----`n"
+  - ps: $fileContent += $env:GIT_SSH_KEY.Replace(' ', "`n")
+  - ps: $fileContent += "`n-----END RSA PRIVATE KEY-----`n"
+  - ps: Set-Content $env:userprofile\.ssh\id_rsa $fileContent
+  - git submodule update --init --recursive
+  - dotnet --info
+  - dotnet restore
 
 init:
 - ps: |

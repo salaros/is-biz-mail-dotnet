@@ -20,8 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsBizMail.Test", "tests\IsB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{B848CBFD-3FF8-444D-B64E-972917F0852F}"
 	ProjectSection(SolutionItems) = preProject
-		assets\emailSamples.json = assets\emailSamples.json
-		assets\not-found-in-spamassassin-list.txt = assets\not-found-in-spamassassin-list.txt
+		assets\email-test-samples.json = assets\email-test-samples.json
+		assets\emails-not-in-spamassassin.txt = assets\emails-not-in-spamassassin.txt
 	EndProjectSection
 EndProject
 Global
