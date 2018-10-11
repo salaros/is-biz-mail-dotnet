@@ -146,4 +146,4 @@ after_test:
       dotnet tool install -g dotnet-testx
 
       dotnet testx --project=all --html=true --opencover-filters="+[Salaros*]* -[xunit*]* -[*Tests]*" --opencover-options="-oldStyle"
-      csmacnz.Coveralls --opencover --input .\coverage\results.xml --repoToken $env:COVERALLS_REPO_TOKEN
+      csmacnz.Coveralls --opencover --input .\coverage\results.xml --repoToken $env:COVERALLS_REPO_TOKEN --serviceName appveyor
