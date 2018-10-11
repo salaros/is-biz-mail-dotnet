@@ -4,7 +4,7 @@ using System.Reflection;
 using System;
 using System.Linq;
 
-namespace Salaros.Email.Test
+namespace Salaros.Email.Tests
 {
     public class IsBizMailTest
     {

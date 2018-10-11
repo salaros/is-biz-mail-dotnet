@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Salaros.Email.Test
+namespace Salaros.Email.Tests
 {
     internal class EmailSamples
     {

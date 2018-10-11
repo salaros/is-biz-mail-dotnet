@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsBizMail", "src\IsBizMail.csproj", "{F8722C5D-2464-2454-5C38-51BD6511CD90}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsBizMail.Test", "tests\IsBizMail.Test.csproj", "{8A4D33FB-4592-4EC2-894F-B773BEAE305C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsBizMail.Tests", "tests\IsBizMail.Tests.csproj", "{8A4D33FB-4592-4EC2-894F-B773BEAE305C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{B848CBFD-3FF8-444D-B64E-972917F0852F}"
 	ProjectSection(SolutionItems) = preProject

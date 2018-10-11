@@ -334,9 +334,9 @@ build/
 # Other stuff
 package/
 tools/
+coverage/
 src/bin
 src/obj
 test/bin
 test/obj
 \.vs/
-tests/coverage\.xml
