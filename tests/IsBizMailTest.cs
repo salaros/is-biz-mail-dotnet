@@ -34,6 +34,18 @@ namespace Salaros.Email.Tests
         }
 
         [Fact]
+        public void AreDisposableConsideredFree()
+        {
+            Assert.NotNull(EmailSamples.Disposable);
+            Assert.NotEmpty(EmailSamples.Disposable);
+
+            foreach (var disposableEmail in EmailSamples.Disposable)
+            {
+                Assert.True(IsBizMail.IsFreeMailAddress(disposableEmail), $"{disposableEmail} is disposable");
+            }
+        }
+
+        [Fact]
         public void DoPatternsWork()
         {
             Assert.NotNull(EmailSamples.DomainPatterns);

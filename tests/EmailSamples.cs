@@ -33,6 +33,15 @@ namespace Salaros.Email.Tests
         public List<string> DomainPatterns { get; internal set; }
 
         /// <summary>
+        /// Gets or sets the list of disposable email addresses.
+        /// </summary>
+        /// <value>
+        /// The list of disposable email addresses.
+        /// </value>
+        [JsonProperty("disposable")]
+        public List<string> Disposable { get; internal set; }
+
+        /// <summary>
         /// Gets or sets the list of invalid emails.
         /// </summary>
         /// <value>
