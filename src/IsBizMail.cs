@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -7,7 +7,8 @@ namespace Salaros.Email
 {
     public static class IsBizMail
     {
-        private static readonly string[] FreeMailDomains, FreeDomainPatterns;
+        private static readonly List<string> FreeMailDomains;
+        private static readonly string[] FreeDomainPatterns;
 
         /// <summary>
         /// Returns true if email is valid business email address.
@@ -50,27 +51,21 @@ namespace Salaros.Email
             if (string.IsNullOrWhiteSpace(emailDomain))
                 throw new ArgumentException($"Please supply a valid email address: {nameof(email)}", nameof(email));
 
-            return FreeMailDomains.Any(fd => fd.Equals(emailDomain, StringComparison.OrdinalIgnoreCase)) 
-                || FreeDomainPatterns.Any(dp => Regex.IsMatch(emailDomain, Regex.Escape(dp).Replace("\\*", ".*")));
+            return FreeMailDomains.Exists(fd => fd.Equals(emailDomain, StringComparison.OrdinalIgnoreCase))
+                || FreeDomainPatterns.Any(dp => Regex.IsMatch(emailDomain, dp));
         }
 
         /// <summary>
         /// Gets list of known free mail provider domains.
         /// </summary>
         /// <returns>The list of known free mail provider domains</returns>
-        public static string[] GetFreeDomains()
-        {
-            return FreeMailDomains;
-        }
+        public static IReadOnlyCollection<string> GetFreeDomains() => FreeMailDomains;
 
         /// <summary>
         /// Gets the list of patterns matching some free mail provider domains.
         /// </summary>
         /// <returns>The list of patterns matching some free mail provider domains</returns>
-        public static string[] GetFreeDomainPatterns()
-        {
-            return FreeDomainPatterns;
-        }
+        public static IReadOnlyCollection<string> GetFreeDomainPatterns() => FreeDomainPatterns;
 
         private const string EmailRegex = @"^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$";
         private static readonly Regex IsValidEmail;
@@ -78,7 +73,7 @@ namespace Salaros.Email
         static IsBizMail()
         {
             IsValidEmail = new Regex(EmailRegex, options: RegexOptions.IgnoreCase | RegexOptions.Compiled);
-            FreeMailDomains = new string[] {
+            FreeMailDomains = new List<string> {
                 // free email providers start
                 "0-mail.com", "020.co.uk", "027168.com", "0815.ru", "0815.ru0clickemail.com", "0815.ry",
                 "0815.su", "0845.ru", "0clickemail.com", "0wnd.net", "0wnd.org", "0x207.info",
@@ -913,14 +908,16 @@ namespace Salaros.Email
             };
 
             FreeDomainPatterns = new string[] {
-                // free email patterns start               
+                // free email patterns start
                 "aol.*", "aol.co*.*", "*.att.ne.jp", "excite.*", "excite.co*.*", "fastmail.*",
                 "fastmail.co*.*", "freemail.*", "freemail.*.*", "gmx.*", "hotmail.*", "hotmail.co*.*",
                 "live.*", "lycos.*", "lycos.co*.*", "mail2*.com", "ms*.hinet.net", "outlook.*",
                 "strompost.*", "tiscali.*", "tiscali.co*.*", "vodafone.*", "xemail.*", "yahoo.*",
                 "yahoo.co*.*", "yandex.*", "runbox.*", "*.onmicrosoft.com",
                 // free email patterns end
-            };
+            }
+            .Select(w => w = Regex.Escape(w).Replace("\\*", ".*"))
+            .ToArray();
         }
     }
 }
